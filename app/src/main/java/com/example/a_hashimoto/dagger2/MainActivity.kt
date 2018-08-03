@@ -8,22 +8,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
+//    @Inject
     lateinit var apiService: GithubApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val retrofit = Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create())
-                .baseUrl("https://api.github.com/")
-                .build()
-
-        apiService = retrofit.create<GithubApiService>(GithubApiService::class.java)
+        apiService = ApiServiceFactory.create()
 
         apiService.listRepos("a-hashimoto")
                 .enqueue(object :Callback<List<Repo>>{
