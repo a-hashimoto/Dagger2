@@ -13,13 +13,15 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-//    @Inject
+    @Inject
     lateinit var apiService: GithubApiService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        apiService = ApiServiceFactory.create()
+//        apiService = ApiServiceFactory.create()
+        (application as MyApplication).appComponent.inject(this)
 
         apiService.listRepos("a-hashimoto")
                 .enqueue(object :Callback<List<Repo>>{
